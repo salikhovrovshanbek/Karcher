@@ -19,8 +19,8 @@ class Karcher extends Model
         'countPersons',
     ];
 
-    public function user()
+    public function users()
     {
-        return $this->hasMany(User::class)->orderBy('id');
+        return $this->hasMany(User::class,'karcher_id')->orderBy('id');
     }
 }

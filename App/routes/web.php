@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthorizationController;
+use App\Http\Controllers\AdminController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,14 +14,14 @@ use App\Http\Controllers\AuthorizationController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
+Route::view('/','welcome')->name('home');
+Route::view('/first','hello')->name('first');
 
 Route::middleware("auth")->group(function(){
     Route::get('/logout',[AuthorizationController::class,'logout'])->name('logout');
 });
+
+Route::post('admin',[AdminController::class,'login'])->name('admin');
 
 Route::middleware("guest")->group(function(){
     Route::get('/login',[AuthorizationController::class,'showLoginForm'])->name('login');
@@ -28,6 +29,7 @@ Route::middleware("guest")->group(function(){
 
     Route::get('/register',[AuthorizationController::class,'showRegisterForm'])->name('register');
     Route::post('/register_process',[AuthorizationController::class,'register'])->name('register_process');
+//    Route::post('/last_registr',[AuthorizationController::class,])->name('last_reg');
 
     Route::get('/forgot',[AuthorizationController::class,'showForgotForm'])->name('forgot');
     Route::post('/forgot_process',[AuthorizationController::class,'forgot'])->name('forgot_process');

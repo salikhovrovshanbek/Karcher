@@ -59,15 +59,19 @@ class AuthorizationController extends Controller
 
     public function register(Request $request){
         $data = $request->validate([
-            "name"=>["required","string"],
+            "fullname"=>["required","string"],
             "email"=>["required","email","string","unique:users,email"],
-            "password"=>["required","confirmed"]
+            "password"=>["required","confirmed"],
+            "role"=>["required","string"],
+            "karcher_id"=>["required"],
         ]);
 
         $user=Models\User::create([
-            "name"=>$data["name"],
+            "fullname"=>$data["fullname"],
             "email"=>$data["email"],
-            "password"=>bcrypt($data["password"])
+            "password"=>bcrypt($data["password"]),
+            "role"=>$data["role"],
+            "karcher_id"=>$data["karcher_id"],
         ]);
 
         if ($user){

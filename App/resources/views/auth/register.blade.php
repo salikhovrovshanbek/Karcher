@@ -28,11 +28,21 @@
                     <p class="text-red-500">{{$message}}</p>
                 @enderror
 
+                <input name="role" type="text" class="w-full h-12 border border-gray-800 rounded px-3 @error('role') border-red-700 @enderror" placeholder="Role" />
+                @error('role')
+                <p class="text-red-500">{{$message}}</p>
+                @enderror
+
+                <input name="karcher_id" type="integer" class="w-full h-12 border border-gray-800 rounded px-3 @error('karcher_id') border-red-700 @enderror" placeholder="karcher id" />
+                @error('karcher_id')
+                <p class="text-red-500">{{$message}}</p>
+                @enderror
+
                 <div>
                     <a href="{{route("login")}}" class="font-medium text-blue-900 hover:bg-blue-300 rounded-md p-2">Есть аккаунт?</a>
                 </div>
 
-                <button type="submit" class="text-center w-full bg-blue-900 rounded-md text-white py-3 font-medium">Зарегистрироваться</button>
+                <a href="{{url('login')}}" type="submit" class="text-center w-full bg-blue-900 rounded-md text-white py-3 font-medium">Зaрегистрация</a>
             </form>
         </div>
     </div>

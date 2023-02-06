@@ -46,6 +46,6 @@ class User extends Authenticatable
 
     public function karcher()
     {
-        return $this->belongsTo(Karcher::class);
+        return $this->belongsTo(Karcher::class,'karcher_id');
     }
 }
