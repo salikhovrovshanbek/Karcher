@@ -9,15 +9,16 @@ class Karcher extends Model
 {
     use HasFactory;
 
-    protected $fillable=[
-        'name',
-        'longitude',
-        'latitude',
-        'address',
-        'director',
-        'phone',
-        'countPersons',
-    ];
+//    protected $fillable=[
+//        'name',
+//        'longitude',
+//        'latitude',
+//        'address',
+//        'director',
+//        'phone',
+//        'countPersons',
+//    ];
+    protected $guarded=[];
 
     public function users()
     {

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthorizationController;
 use App\Http\Controllers\AdminController;
+use \App\Http\Controllers\KarcherController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -35,14 +36,33 @@ Route::middleware("guest")->group(function(){
     Route::post('/forgot_process',[AuthorizationController::class,'forgot'])->name('forgot_process');
 });
 
+ Route::get('/karcher', [KarcherController::class,'index'])
+->name('karcher.index');
 
+ Route::get('/karcher/create', [KarcherController::class,'create'])
+->name('karcher.create');
+
+ Route::post('/karcher', [KarcherController::class,'store'])
+->name('karcher.store');
+
+ Route::get('/karcher/{karcher}/edit', [KarcherController::class,'edit'])
+->name('karcher.edit');
+
+ Route::put('/karcher/{karcher}', [KarcherController::class,'update'])
+->name('karcher.update');
+
+ Route::delete('/karcher/{karcher}', [KarcherController::class,'destroy'])
+->name('karcher.destroy');
 
 
 
 /*
 auth.login   ->showLoginForm
 return redirect(route("home"));   ->logout
-return redirect(route("login"))->withErrors(["email"=>"User not found Or your data is incorrect"]);   ->login
+return redirect(route("login"))
+->withErrors(
+["email"=>"User not found Or your data is incorrect"
+]);   ->login
 auth.register   ->showRegisterForm
 auth.forgetPass     ->showForgotForm
 return redirect(route("login")); ->forgot
