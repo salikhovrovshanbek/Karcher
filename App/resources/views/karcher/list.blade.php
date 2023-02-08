@@ -52,8 +52,8 @@
                         <td>{{ $k->countPersons }}</td>
                         <td>
                             <a href="{{ route('karcher.edit', $k->id) }}" class="btn btn-outline-primary btn-sm">Edit</a>
-                            <a href="#" onclick="deleteEmployee({{ $k->id }})" class="btn btn-outline-danger btn-sm">Delete</a>
-                            <form id="employee-edit-action-{{ $k->id }}" action="{{ route('karcher.destroy',$k->id) }}" method="post">
+                            <a href="#" onclick="deleteKarcher({{ $k->id }})" class="btn btn-outline-danger btn-sm">Delete</a>
+                            <form id="karcher-edit-action-{{ $k->id }}" action="{{ route('karcher.destroy',$k->id) }}" method="post">
                                 @csrf
                                 @method('delete')
                             </form>

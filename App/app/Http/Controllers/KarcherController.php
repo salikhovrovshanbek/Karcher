@@ -9,8 +9,8 @@ class KarcherController extends Controller
 {
     public function index()
     {
-        $karchers = Karcher::query()->orderBy('id', 'DESC')->paginate(4);
-        return view('karcher.list', ['karchers' => $karchers]);
+        $karcher = Karcher::query()->orderBy('id', 'DESC')->paginate(4);
+        return view('karcher.list', ['karcher' => $karcher]);
     }
 
     public function create()
@@ -24,9 +24,9 @@ class KarcherController extends Controller
         $karcher =Karcher::query()->create($request->post());
         if ($karcher) {
             $karcher->save();
-            return redirect()->route('hello')->with('success','Karcher Added Succesfully');
+            return redirect()->route('karcher.index')->with('success','Karcher Added Succesfully');
         }else{
-            return redirect()->route('hello')->withErrors(error_get_last())->withInput();
+            return redirect()->route('karcher.create')->withErrors(error_get_last())->withInput();
         }
     }
 
@@ -53,9 +53,9 @@ class KarcherController extends Controller
         $karcher->fill(request()->post());
         if ($karcher){
             $karcher->save();
-            return redirect()->route('hello')->with('success', 'Karcher successfully updated');
+            return redirect()->route('karcher.index')->with('success', 'Karcher successfully updated');
         }else{
-            return redirect()->route('hello',$karcher->id)->withErrors(error_get_last())->withInput();
+            return redirect()->route('karcher.edit',$karcher->id)->withErrors(error_get_last())->withInput();
         }
     }
 
@@ -65,8 +65,8 @@ class KarcherController extends Controller
       $karcher = Karcher::query()->find($id);
       if($karcher){
           $karcher->delete();
-          return redirect()->route('hello')->with('success','Karcher successfully deleted');
+          return redirect()->route('karcher.index')->with('success','Karcher successfully deleted');
       }
-      return redirect()->route('hello')->with('error','Karcher not found');
+      return redirect()->route('karcher.index')->with('error','Karcher not found');
     }
 }
