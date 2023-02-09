@@ -28,7 +28,7 @@
                     <a href="{{route("register")}}" class="font-medium text-blue-900 hover:bg-blue-300 rounded-md p-2">Регистрация</a><br><br>
                 </div>
 
-                <button  {{route('login')}} type="submit" class="text-center w-full bg-blue-900 rounded-md text-white py-3 font-medium">Войти</button><br><br>
+                <button  type="submit" class="text-center w-full bg-blue-900 rounded-md text-white py-3 font-medium">Войти</button><br><br>
 
             </form>
         </div>

@@ -24,7 +24,7 @@ class KarcherController extends Controller
         $karcher =Karcher::query()->create($request->post());
         if ($karcher) {
             $karcher->save();
-            return redirect()->route('karcher.index')->with('success','Karcher Added Succesfully');
+            return redirect()->route('karcher.index')->with('success','Karcher Added Successfully');
         }else{
             return redirect()->route('karcher.create')->withErrors(error_get_last())->withInput();
         }
@@ -46,11 +46,10 @@ class KarcherController extends Controller
              "latitude"=>["required"],
              "address"=>["required"],
              "director"=>["required","string"],
-             "phone"=>["required","phone"],
+             "phone"=>["required"],
              "countPersons"=>["required"],
         ]);
-
-        $karcher->fill(request()->post());
+        if ($data) $karcher->fill(request()->post());
         if ($karcher){
             $karcher->save();
             return redirect()->route('karcher.index')->with('success', 'Karcher successfully updated');

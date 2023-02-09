@@ -45,7 +45,7 @@ class AuthorizationController extends Controller
             "email"=>["required","email","string","exists:users"]
         ]);
 
-        $user = Models\User::where(["email" => $data["email"]])->first();
+        $user = Models\User::query()->where(["email" => $data["email"]])->first();
 
         $password=uniqid();
 
@@ -59,24 +59,22 @@ class AuthorizationController extends Controller
 
     public function register(Request $request){
         $data = $request->validate([
-            "fullname"=>["required","string"],
-            "email"=>["required","email","string","unique:users,email"],
+            "name"=>["required","string"],
+            "email"=>["required","email","unique:users,email"],
             "password"=>["required","confirmed"],
             "role"=>["required","string"],
             "karcher_id"=>["required"],
         ]);
-
+//        dd($data);
         $user=Models\User::create([
-            "fullname"=>$data["fullname"],
+            "fullname"=>$data["name"],
             "email"=>$data["email"],
             "password"=>bcrypt($data["password"]),
             "role"=>$data["role"],
             "karcher_id"=>$data["karcher_id"],
         ]);
 
-        if ($user){
-            auth("web")->login($user);
-        }
+        if ($user) auth("web")->login($user);//login($user);
 
         return redirect(route("home"));
     }

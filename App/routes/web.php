@@ -53,18 +53,3 @@ Route::middleware("guest")->group(function(){
 
  Route::delete('/karcher/{karcher}', [KarcherController::class,'destroy'])
 ->name('karcher.destroy');
-
-
-
-/*
-auth.login   ->showLoginForm
-return redirect(route("home"));   ->logout
-return redirect(route("login"))
-->withErrors(
-["email"=>"User not found Or your data is incorrect"
-]);   ->login
-auth.register   ->showRegisterForm
-auth.forgetPass     ->showForgotForm
-return redirect(route("login")); ->forgot
-return redirect(route("home")); ->register
-*/

@@ -68,7 +68,7 @@
                     <div>
                         <br><br><label for="phone" class="form-label">PHONE</label><br>
                         <label>
-                            <input type="text" class="form-control border-white_light_1 rounded-8" placeholder="+998 (99) 999-99-99">
+                            <input name="phone" type="text" class="form-control border-white_light_1 rounded-8" placeholder="+998 (99) 999-99-99">
                         </label>
                         @error('phone')
                         <p class="invalid-feedback">{{ $message }}</p>
@@ -78,7 +78,7 @@
                     <div>
                         <br><label for="countPersons" class="form-label">countPersons</label><br>
                         <label>
-                            <input type="text" class="form-control border-white_light_1 rounded-8" >
+                            <input name="countPersons" type="text" class="form-control border-white_light_1 rounded-8" placeholder="1" >
                         </label>
                         @error('countPersons')
                         <p class="invalid-feedback">{{ $message }}</p>
