@@ -48,4 +48,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Karcher::class,'karcher_id');
     }
+
+    public function connectWithKarcher()
+    {
+        return $this->hasMany(UserKarcherConnect::class,'user_id');
+    }
 }
