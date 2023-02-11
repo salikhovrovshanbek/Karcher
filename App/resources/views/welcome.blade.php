@@ -1,8 +1,12 @@
 @extends('layout.app')
+
 @section('title','Main page')
+
 @section('content')
     @include('partials.header')
-        <h3> Hello BurgutSoft! </h3>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mt-10 mb-20">
+        @include("karcher.list")
+    </div>
 @endsection
 
 
