@@ -1,13 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title> Creating karcher </title>
-    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
-</head>
+@extends('layout.app')
+@section('content')
 <body>
+    <div class="bg-dark py-3">
+        <div class="container">
+            <div class="h4 text-white">List of Karchers</div>
+        </div>
+    </div>
     <div class="bg-dark py-3">
         <div class="container">
             <div class="h4 text-white">Karcher</div>
@@ -101,4 +99,4 @@
     </div>
 
 </body>
-</html>
+@endsection

@@ -15,7 +15,13 @@ use \App\Http\Controllers\KarcherController;
 |
 */
 
-Route::view('/','welcome')->name('home');
+//Route::get('/', function () {
+//    return view('welcome');
+//});
+
+Route::get('/m', [\App\Http\Controllers\MapController::class, 'index']);
+
+//Route::view('/','welcome')->name('home');
 Route::view('/first','hello')->name('first');
 
 Route::middleware("auth")->group(function(){
@@ -36,7 +42,7 @@ Route::middleware("guest")->group(function(){
     Route::post('/forgot_process',[AuthorizationController::class,'forgot'])->name('forgot_process');
 });
 
- Route::get('/karcher', [KarcherController::class,'index'])
+ Route::get('/', [KarcherController::class,'index'])
 ->name('karcher.index');
 
  Route::get('/karcher/create', [KarcherController::class,'create'])

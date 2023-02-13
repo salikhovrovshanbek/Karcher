@@ -19,7 +19,9 @@ class User extends Authenticatable
      */
     protected $fillable=[
         'fullname',
-        'email',
+        'phone',
+        'phone_verified',
+        'phone_verified_at',
         'password',
         'role',
         'karcher_id',
@@ -41,7 +43,8 @@ class User extends Authenticatable
      * @var array<string, string>
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        'phone_verified_at' => 'datetime',
+        'phone_verified' => 'boolean'
     ];
 
     public function karcher()

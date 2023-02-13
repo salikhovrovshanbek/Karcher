@@ -10,8 +10,9 @@ class KarcherController extends Controller
     public function index()
     {
 //        $karcher = Karcher::query()->orderBy('id', 'DESC')->paginate(4);
-        $karcher=Karcher::all();
-        return view('karcher.list', ['karcher' => $karcher]);
+        $karcher=Karcher::query()->get();
+//        dd($karcher);
+        return view('karcher.list',['karcher' => $karcher]);//->with('karcher' , $karcher);
     }
 
     public function create()

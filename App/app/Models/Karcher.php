@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Karcher extends Model
 {
     use HasFactory;
+    protected $table = 'karchers';
 
 //    protected $fillable=[
 //        'name',
