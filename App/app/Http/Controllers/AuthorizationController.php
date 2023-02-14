@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\SendSms;
+use App\Http\Requests\LoginUserRequest;
+use App\Http\Requests\LoginWithCodeRequest;
+use App\Http\Requests\PhoneSmsRequest;
 use App\Http\Requests\RegisterUserRequest;
 use App\Services\AuthService;
 use Illuminate\Http\Request;
+use App\Models\User;
 use App\Models;
 use Illuminate\Support\Facades\Auth;
 
@@ -34,8 +39,24 @@ class AuthorizationController extends Controller
     }
 
 
-    public function login(){
-        
+    public function login(LoginUserRequest $request,AuthService $service){
+        $credentials=$request->validated();
+        $remember=$credentials['remember'] ?? false;
+        unset($credentials['remember']);
+
+        if(!($user=$service->isAuth($credentials,$remember))){
+            return response([
+                'error'=>'Credentials are not correct'
+            ],422);
+        }
+
+        $token=$service->GetTokenUser($user);
+
+        return response([
+            'user'=>$user,
+            'token'=>$token
+        ]);
+
     }
 //    public function login(Request $request){
 //        $data = $request->validate([
@@ -105,4 +126,35 @@ class AuthorizationController extends Controller
 //        return redirect(route("home"));
 //    }
 
+    public function loginWithSms(LoginWithCodeRequest $request, AuthService $service){
+//        dd($request->validationData());
+        $data = $request->validated();
+        $result = $service->checkCodeWithPhone($data);
+        if($result){
+            $checkIsNew = User::query()->where(['fullname'=>$data['phone']])->first();
+            if(empty($checkIsNew)){
+                $data['fullname'] = $data['phone'];
+                $data['password'] = $data['code'];
+                return  $service->StoreNewUser($data);
+            }else{
+                return ['user'=>$checkIsNew, 'token'=>$service->GetTokenUser($checkIsNew)];
+            }
+        }else{
+            return ['success'=>0, 'code'=>'Code not valid'];
+        }
+
+    }
+
+    public function sendSms(PhoneSmsRequest $request, SendSms $action, AuthService $service){
+        $phone = $request->validated();
+        $checkUser = User::where(['phone'=>$phone['phone']])->first();
+        $code = rand(pow(10, 3), pow(10, 4)-1);
+        if(empty($checkUser)){
+//            $action->sendSms('998935594334','Code: '.$code.' ');
+            $isSave = $service->storeSmsCode(['code'=>$code, 'phone'=>$phone['phone']]);
+            return ['success'=>1, 'test_code'=>$code,'test_phone'=>$phone['phone'], 'isSave'=>$isSave];
+        }else{
+            return $service->storeSmsCode(['code'=>$code, 'phone'=>$phone['phone']]);
+        }
+    }
 }

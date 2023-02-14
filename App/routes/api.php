@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthorizationController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -16,4 +18,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::controller(AuthorizationController::class)->group(function () {
+    Route::post('/signup', 'register');
+    Route::post('/login', 'login');
+    Route::post('/send-sms', 'sendSms');
+    Route::post('/auth-phone', 'loginWithSms');
 });

@@ -16,7 +16,7 @@ RegisterUserRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,11 +24,17 @@ RegisterUserRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
-    {
+    public function rules(){
         return [
-            "username" => ['required', 'unique:users'],
-            "password" => ['required','confirmed', Password::min(4)]
+            "fullname"=>['required'],
+            "phone" => ['required', 'unique:users'],
+            "password" => ['required','confirmed', Password::min(4)],
+            "role"=>['required'],
+            "karcher_id"=>['required'],
         ];
     }
+
+
 }
+
+
