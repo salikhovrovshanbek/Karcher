@@ -24,7 +24,7 @@ class KarcherRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'=>['required|string'],
+            'name'=>['required'],
             'longitude'=>['required'],
             'latitude'=>['required'],
             'address'=>['required'],
