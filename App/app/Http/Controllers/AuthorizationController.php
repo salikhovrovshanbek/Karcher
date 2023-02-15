@@ -147,6 +147,7 @@ class AuthorizationController extends Controller
 
     public function sendSms(PhoneSmsRequest $request, SendSms $action, AuthService $service){
         $phone = $request->validated();
+
         $checkUser = User::where(['phone'=>$phone['phone']])->first();
         $code = rand(pow(10, 3), pow(10, 4)-1);
         if(empty($checkUser)){

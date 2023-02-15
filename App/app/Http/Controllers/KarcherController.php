@@ -3,71 +3,75 @@
 namespace App\Http\Controllers;
 
 use App\Models\Karcher;
-use Illuminate\Http\Request;
+use App\Http\Requests\KarcherDeleteRequest;
+use App\Http\Requests\KarcherRequest;
+use App\Services\KarcherCreateService;
 
 class KarcherController extends Controller
 {
     public function index()
     {
-//        $karcher = Karcher::query()->orderBy('id', 'DESC')->paginate(4);
-        $karcher=Karcher::query()->get();
-//        dd($karcher);
-        return view('karcher.list',['karcher' => $karcher]);//->with('karcher' , $karcher);
+////        $karcher = Karcher::query()->orderBy('id', 'DESC')->paginate(4);
+//        $karcher=Karcher::query()->get();
+////        dd($karcher);
+//        return response()->json(['karcher' => $karcher]);//->with('karcher' , $karcher);
+        return Karcher::query()->select()->get();
     }
 
-    public function create()
-    {
-        return view('karcher.create');
-    }
+//    public function create()
+//    {
+//        return view('karcher.create');
+//    }
 
 
-    public function store(Request $request)
+    public function store(KarcherRequest $request, KarcherCreateService $service)
     {
-        $karcher =Karcher::query()->create($request->post());
-        if ($karcher) {
+        $data=$request->validated();
+        if ($data){
+            $karcher=$service->StoreKarcher($data);
             $karcher->save();
-            return redirect()->route('karcher.index')->with('success','Karcher Added Successfully');
-        }else{
-            return redirect()->route('karcher.create')->withErrors(error_get_last())->withInput();
+            return ['success','Karcher Added Successfully'];
+        } else{
+            return error_get_last();
         }
     }
 
 
 
-    public function edit(Karcher $karcher)
+//    public function edit(Karcher $karcher)
+//    {
+//        return view('karcher.edit',['karcher'=>$karcher]);
+//    }
+
+    public function show(Karcher $karcher)
     {
-        return view('karcher.edit',['karcher'=>$karcher]);
+        return response()->json([
+            'karcher'=>$karcher
+        ]);
     }
 
 
-    public function update(Request $request, Karcher $karcher)
+    public function update(KarcherRequest $request, Karcher $karcher)
     {
-        $data=$request->validate([
-             "name"=>["required","string"],
-             "longitude"=>["required"],
-             "latitude"=>["required"],
-             "address"=>["required"],
-             "director"=>["required","string"],
-             "phone"=>["required"],
-             "countPersons"=>["required"],
-        ]);
+        $data=$request->validated();
         if ($data) $karcher->fill(request()->post());
         if ($karcher){
             $karcher->save();
-            return redirect()->route('karcher.index')->with('success', 'Karcher successfully updated');
+            return ['success', 'Karcher successfully updated'];
         }else{
-            return redirect()->route('karcher.edit',$karcher->id)->withErrors(error_get_last())->withInput();
+            return error_get_last();
         }
     }
 
 
-    public function destroy($id)
+    public function destroy(KarcherDeleteRequest $request)
     {
+      $id=$request['id'];
       $karcher = Karcher::query()->find($id);
       if($karcher){
           $karcher->delete();
-          return redirect()->route('karcher.index')->with('success','Karcher successfully deleted');
+          return ['success','Karcher successfully deleted'];
       }
-      return redirect()->route('karcher.index')->with('error','Karcher not found');
+      return ['error','Karcher not found'];
     }
 }

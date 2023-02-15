@@ -15,8 +15,11 @@ return new class extends Migration
     {
         Schema::create('code_sms', function (Blueprint $table) {
             $table->id();
+            $table->ipAddress('ip');
+            $table->string('phone');
             $table->foreignIdFor(\App\Models\User::class, 'user_id');
             $table->integer('code')->unique();
+            $table->timestamp('expires_at');
             $table->timestamps();
         });
     }
