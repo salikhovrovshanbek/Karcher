@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\User;
+use App\MoonShine\Resources\UserResource;
 use Illuminate\Support\ServiceProvider;
+use Leeto\MoonShine\MoonShine;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +26,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        User::preventLazyLoading(!app()->isProduction());
+        
+        app(MoonShine::class)->registerResources([
+            UserResource::class
+        ]);
     }
 }

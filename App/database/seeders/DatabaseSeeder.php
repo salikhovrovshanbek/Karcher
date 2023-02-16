@@ -19,11 +19,12 @@ class DatabaseSeeder extends Seeder
         Karcher::factory(10)
             ->has(User::factory(10))
             ->create();
-
-//        Karcher::
+//
+//        $karcher=Karcher::query()->create(20);
+//        $user=User::query()->create(20);
 
         User::factory(20)->for(Karcher::factory(10))->create();
-        User::factory(20)->for($karcher)->create();
+//        User::factory(20)->for($karcher)->create();
         User::factory(20,'karchers')->for(Karcher::factory())->create();
 //        User::factory()->create([
 //             'name' => 'Test User',

@@ -48,6 +48,17 @@ class AuthService
     }
 
 
+    public function CreateNewUser($data){
+        $user = User::create([
+            'fullname'=> $data['fullname'],
+            'password' => bcrypt($data['password']),
+            'phone' => $data['phone'] ?? '',
+            'phone_verified' => true,
+            'phone_verified_at' => date('Y-m-d H:i:s', time()),
+            'role'=>$data['role'],
+            'karcher_id'=>$data['karcher_id'],
+        ]);
+    }
 
     public function SignupWithLogin($data){
         /** @var \App\Models\User $user **/
