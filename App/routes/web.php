@@ -15,10 +15,10 @@
 //|
 //*/
 //
-////Route::get('/', function () {
-////    return view('welcome');
-////});
-//
+//Route::get('/', function () {
+//    return view('welcome');
+//});
+////
 //Route::get('/m', [\App\Http\Controllers\MapController::class, 'index']);
 //
 ////Route::view('/','welcome')->name('home');

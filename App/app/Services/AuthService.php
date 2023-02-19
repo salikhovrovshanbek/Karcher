@@ -58,6 +58,7 @@ class AuthService
             'role'=>$data['role'],
             'karcher_id'=>$data['karcher_id'],
         ]);
+        return $user;
     }
 
     public function SignupWithLogin($data){

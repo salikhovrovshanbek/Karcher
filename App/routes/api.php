@@ -33,16 +33,18 @@ Route::controller(KarcherController::class)->prefix('/karcher')->group(function 
 });
 
 Route::controller(AuthorizationController::class)->group(function () {
+//    Route::post('/login', 'login')->name('login');
+//    Route::post('login', [ 'as' => 'login', 'uses' => 'AuthorizationController@login']);
     Route::post('/signup', 'register');
-    Route::post('/login', 'login');
     Route::post('/send-sms', 'sendSms');
     Route::post('/auth-phone', 'loginWithSms');
 });
 
 Route::controller(UserController::class)->prefix('/user-profile')->group(function (){
-    Route::get('/','index');
+    Route::post('/{phone}','index');
     Route::post('/edit','edit');
 });
+Route::post('/user/create',[UserController::class,'create']);
 
 //Route::controller(\App\Http\Controllers\Api\UserProfileController::class)->prefix('/user-profile')->middleware('auth:sanctum')->group(function (){
 //    Route::post('/edit', 'edit');

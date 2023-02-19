@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RegisterUserRequest;
+use App\Http\Requests\UserProfileRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Services\AuthService;
@@ -15,9 +16,9 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(UserProfileRequest $request)
     {
-        $userProfile = User::where(['phone'=>auth()->user()->phone])->first();
+        $userProfile = User::where(['phone'=>auth()->user()->$request])->first();
         return new UserResource($userProfile);
     }
 
@@ -28,7 +29,15 @@ class UserController extends Controller
      */
     public function create(RegisterUserRequest $request,AuthService $service)
     {
-
+        $data=$request->validated();
+        if ($data){
+            $user=$service->CreateNewUser($data);
+            dd($user);
+            $user->save();
+            return ['success','Karcher Added Successfully'];
+        } else{
+            return error_get_last();
+        }
     }
 
 //    /**

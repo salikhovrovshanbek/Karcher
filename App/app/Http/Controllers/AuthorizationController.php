@@ -71,13 +71,13 @@ class AuthorizationController extends Controller
 //        return redirect(route("login"))->withErrors(["email"=>"User not found Or your data is incorrect"]);
 //    }
 
-    public function showRegisterForm(){
-        return view("auth.register");
-    }
-
-    public function showForgotForm(){
-        return view("auth.forgetPass");
-    }
+//    public function showRegisterForm(){
+//        return view("auth.register");
+//    }
+//
+//    public function showForgotForm(){
+//        return view("auth.forgetPass");
+//    }
 
     public function forgot(Request $request){
         $data = $request->validate([
