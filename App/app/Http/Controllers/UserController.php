@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RegisterUserRequest;
+use App\Http\Requests\UserDeleteRequest;
 use App\Http\Requests\UserProfileRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
@@ -18,7 +19,11 @@ class UserController extends Controller
      */
     public function index(UserProfileRequest $request)
     {
-        $userProfile = User::where(['phone'=>auth()->user()->$request])->first();
+//        $phone=$request['phone'];
+//        dd($request);
+        $phone =$request['phone'];
+//        dd($phone);
+        $userProfile = User::query()->where(['phone'=>auth()->user()->$phone])->first();
         return new UserResource($userProfile);
     }
 
@@ -57,21 +62,21 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        //
+        return User::all();
     }
 
-//    /**
-//     * Show the form for editing the specified resource.
-//     *
-//     * @param  int  $id
-//     * @return \Illuminate\Http\Response
-//     */
-//    public function edit($id)
-//    {
-//        //
-//    }
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        return ["msg"];
+    }
 
     /**
      * Update the specified resource in storage.
@@ -91,8 +96,14 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(UserDeleteRequest $request)
     {
-        //
+        $id=$request['id'];
+        $user = User::query()->find($id);
+        if($user){
+            $user->delete();
+            return ['success','User successfully deleted'];
+        }
+        return ['error','User not found'];
     }
 }

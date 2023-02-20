@@ -51,17 +51,22 @@ class KarcherController extends Controller
     }
 
 
-    public function update(KarcherRequest $request, Karcher $karcher)
+    public function update(KarcherRequest $request)
     {
         $data=$request->validated();
-        if ($data) $karcher->fill(request()->post());
-        if ($karcher){
-            $karcher->save();
-            return ['success', 'Karcher successfully updated'];
-        }else{
-            return error_get_last();
+        if (!empty(auth()->user()->phone)) {
+            $karcher=Karcher::query()->where(['phone'=>auth()->user()->phone])->first();
+            if ($data) $karcher->fill(request()->post());
+            if ($karcher){
+                $karcher->save();
+                return ['success', 'Karcher successfully updated'];
+            }else{
+                return error_get_last();
+            }
         }
+
     }
+
 
 
     public function destroy(KarcherDeleteRequest $request)

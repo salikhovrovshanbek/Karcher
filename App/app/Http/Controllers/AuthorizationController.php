@@ -99,7 +99,7 @@ class AuthorizationController extends Controller
     public function register(RegisterUserRequest $request, AuthService $service)
     {
         $user=$service->SignupWithLogin($request->validated());
-        if ($user) auth("web")->login($user[]);
+//        if ($user) auth("web")->login($user);
         return response($user);
 //        return redirect(route("home"));
     }

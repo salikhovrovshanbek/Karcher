@@ -38,7 +38,7 @@ Route::controller(KarcherController::class)->prefix('/karcher')->group(function 
 });
 
 Route::controller(AuthorizationController::class)->group(function () {
-//    Route::post('/login', 'login')->name('login');
+    Route::post('/login', 'login')->name('login');
 //    Route::post('login', [ 'as' => 'login', 'uses' => 'AuthorizationController@login']);
     Route::post('/signup', 'register');
     Route::post('/send-sms', 'sendSms');
@@ -46,11 +46,19 @@ Route::controller(AuthorizationController::class)->group(function () {
 });
 
 Route::controller(UserController::class)->prefix('/user-profile')->group(function (){
-    Route::post('/{phone}','index');
+    Route::post('/phone','index');
     Route::post('/edit','edit');
 });
 
-Route::post('/user/create',[UserController::class,'create']);
+Route::controller(UserController::class)->prefix('/user')->group(function (){
+    Route::get('/list','show');
+    Route::post('/create','create');
+    Route::post('/edit','edit');
+    Route::delete('/delete','destroy');
+});
+
+
+
 
 Route::group(['middleware'=>['auth','admin']],function (){
     Route::post('/s',[MapController::class,'something']);

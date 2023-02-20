@@ -15,15 +15,12 @@ class AuthService
             'fullname'=>$data['fullname'],
             'password' => bcrypt($data['password']),
             'phone' => $data['phone'] ?? '',
-            'phone_verified' => (bool)$data['code'],
+//            'phone_verified' => (bool)$data['code'],
             'phone_verified_at' => $data['code'] ? date('Y-m-d H:i:s', time()) : '',
             'role'=>$data['role'],
             'karcher_id'=>$data['karcher_id'],
         ]);
 
-//        $userProfile = UserProfile::create([
-//            'user_id'=>$user->id,
-//        ]);
         $token =  $this->GetTokenUser($user);
         return [
             'user' => $user,
@@ -53,7 +50,7 @@ class AuthService
             'fullname'=> $data['fullname'],
             'password' => bcrypt($data['password']),
             'phone' => $data['phone'] ?? '',
-            'phone_verified' => true,
+//            'phone_verified' => true,
             'phone_verified_at' => date('Y-m-d H:i:s', time()),
             'role'=>$data['role'],
             'karcher_id'=>$data['karcher_id'],
@@ -67,7 +64,7 @@ class AuthService
             'fullname'=> $data['fullname'],
             'password' => bcrypt($data['password']),
             'phone' => $data['phone'] ?? '',
-            'phone_verified' => true,
+//            'phone_verified' => true,
             'phone_verified_at' => date('Y-m-d H:i:s', time()),
             'role'=>$data['role'],
             'karcher_id'=>$data['karcher_id'],
