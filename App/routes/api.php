@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthorizationController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\KarcherController;
+use App\Http\Controllers\MapController;
 
 
 /*
@@ -17,6 +18,10 @@ use App\Http\Controllers\KarcherController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::get('/',function (){
+    return "Welcome to Karcher Project";
+});
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -44,7 +49,12 @@ Route::controller(UserController::class)->prefix('/user-profile')->group(functio
     Route::post('/{phone}','index');
     Route::post('/edit','edit');
 });
+
 Route::post('/user/create',[UserController::class,'create']);
+
+Route::group(['middleware'=>['auth','admin']],function (){
+    Route::post('/s',[MapController::class,'something']);
+});
 
 //Route::controller(\App\Http\Controllers\Api\UserProfileController::class)->prefix('/user-profile')->middleware('auth:sanctum')->group(function (){
 //    Route::post('/edit', 'edit');

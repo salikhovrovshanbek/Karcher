@@ -36,4 +36,8 @@ class MapController extends Controller
         ];
         return view('welcome', compact('initialMarkers'));
     }
+
+    public function something(){
+        return 'sdfgh';
+    }
 }
