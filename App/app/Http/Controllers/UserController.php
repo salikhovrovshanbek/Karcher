@@ -36,8 +36,9 @@ class UserController extends Controller
     {
         $data=$request->validated();
         if ($data){
+//            echo "if statement";
             $user=$service->CreateNewUser($data);
-            dd($user);
+//            dd($user);
             $user->save();
             return ['success','Karcher Added Successfully'];
         } else{

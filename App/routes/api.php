@@ -20,15 +20,8 @@ use App\Http\Controllers\MapController;
 */
 
 Route::get('/',function (){
-    return "Welcome to Karcher Project";
+    return ["Welcome to Karcher Project"];
 });
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-//Route::delete('/karcher/delete/{id}',[KarcherController::class,'destroy']);
-
 
 Route::controller(KarcherController::class)->prefix('/karcher')->group(function (){
     Route::get('/list','index');
@@ -40,9 +33,11 @@ Route::controller(KarcherController::class)->prefix('/karcher')->group(function 
 Route::controller(AuthorizationController::class)->group(function () {
     Route::post('/login', 'login')->name('login');
 //    Route::post('login', [ 'as' => 'login', 'uses' => 'AuthorizationController@login']);
-    Route::post('/signup', 'register');
-    Route::post('/send-sms', 'sendSms');
-    Route::post('/auth-phone', 'loginWithSms');
+    Route::post('/signup', 'register')->name('register');
+    Route::get('/logout','logout')->name('logout');
+//    Route::get('/forgot','forgot')->name('forgot');---------|\
+//    Route::post('/send-sms', 'sendSms');                    | |-->the same
+//    Route::post('/auth-phone', 'loginWithSms');-------------|/
 });
 
 Route::controller(UserController::class)->prefix('/user-profile')->group(function (){

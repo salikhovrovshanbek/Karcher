@@ -46,8 +46,9 @@ class AuthorizationController extends Controller
 
         if(!($user=$service->isAuth($credentials,$remember))){
             return response([
-                'error'=>'Credentials are not correct'
-            ],422);
+                'error'=>'Credentials are not correct or Not found data !' .
+                    'Just Register'
+            ],401);
         }
 
         $token=$service->GetTokenUser($user);
