@@ -56,6 +56,7 @@ class KarcherController extends Controller
         $data=$request->validated();
         if (!empty(auth()->user()->phone)) {
             $karcher=Karcher::query()->where(['phone'=>auth()->user()->phone])->first();
+            dump($data);
             if ($data) $karcher->fill(request()->post());
             if ($karcher){
                 $karcher->save();

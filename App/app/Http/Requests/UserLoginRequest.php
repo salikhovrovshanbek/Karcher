@@ -3,11 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rules\Password;
 
-class
-
-RegisterUserRequest extends FormRequest
+class UserLoginRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,17 +21,12 @@ RegisterUserRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules(){
+    public function rules()
+    {
         return [
-            "fullname"=>['required'],
-            "phone" => ['required', 'unique:users'],
-            "password" => ['required', Password::min(4)],
-            "role"=>['required'],
-            "karcher_id"=>['required'],
-        ];// need add password ->[]
+            'phone'=>['required'],
+            'password'=>['required'],
+            'remember'=>['boolean'],
+        ];
     }
-
-
 }
-
-

@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Actions\SendSms;
-use App\Http\Requests\LoginUserRequest;
+use App\Http\Requests\UserLoginRequest;
 use App\Http\Requests\LoginWithCodeRequest;
 use App\Http\Requests\PhoneSmsRequest;
-use App\Http\Requests\RegisterUserRequest;
+use App\Http\Requests\UserRegisterRequest;
 use App\Services\AuthService;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -39,7 +39,7 @@ class AuthorizationController extends Controller
     }
 
 
-    public function login(LoginUserRequest $request,AuthService $service){
+    public function login(UserLoginRequest $request, AuthService $service){
         $credentials=$request->validated();
         $remember=$credentials['remember'] ?? false;
         unset($credentials['remember']);
@@ -97,7 +97,7 @@ class AuthorizationController extends Controller
         return redirect(route("login"));
     }
 
-    public function register(RegisterUserRequest $request, AuthService $service)
+    public function register(UserRegisterRequest $request, AuthService $service)
     {
         $user=$service->SignupWithLogin($request->validated());
 //        if ($user) auth("web")->login($user);
@@ -105,7 +105,7 @@ class AuthorizationController extends Controller
 //        return redirect(route("home"));
     }
 
-//    public function registerw(RegisterUserRequest $request){
+//    public function registerw(UserRegisterRequest $request){
 //        $data = $request->validate([
 //            "name"=>["required","string"],
 //            "email"=>["required","email","unique:users,email"],

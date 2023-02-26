@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\RegisterUserRequest;
+use App\Http\Requests\UserChangePasswordRequest;
+use App\Http\Requests\UserEditRequest;
+use App\Http\Requests\UserRegisterRequest;
 use App\Http\Requests\UserDeleteRequest;
 use App\Http\Requests\UserProfileRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Services\AuthService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -32,7 +36,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(RegisterUserRequest $request,AuthService $service)
+    public function create(UserRegisterRequest $request, AuthService $service)
     {
         $data=$request->validated();
         if ($data){
@@ -74,9 +78,24 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(UserEditRequest $request,User $user)
     {
-        return ["msg"];
+        $data=$request->validated();
+//        echo $data;
+        $updateInfo = User::query()->where('id', auth()->user()->id)->update($data);
+//        echo $updateInfo;
+        return $updateInfo;
+//
+//        if (!empty(auth()->user()->phone)) {
+//            $user=User::query()->where(['phone'=>auth()->user()->phone])->first();
+//            if ($data) $user->fill(request()->post());
+//            if ($user){
+//                $user->save();
+//                return ['success', 'User successfully updated'];
+//            }else{
+//                return error_get_last();
+//            }
+//        }
     }
 
     /**
@@ -86,9 +105,20 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function updatepassword(UserChangePasswordRequest $request):JsonResponse
     {
-        //
+        $data = $request->validated();
+        $user = User::query()->where('id',auth()->user()->id)->first();
+        if (!Hash::check($data['oldPassword'],$user->password))
+        {
+            abort(401, 'password not corret');
+        }
+        $user->password = $data['password'];
+        $user->save();
+
+
+
+        return response()->json("Password changed successfully!",200);
     }
 
     /**

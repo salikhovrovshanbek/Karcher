@@ -20,7 +20,7 @@ class Admin
         if(Auth::user()->role =='admin'){
             return $next($request);
         }else{
-            return redirect('/');
+           abort(403, 'net dostupa');
         }
     }
 }
